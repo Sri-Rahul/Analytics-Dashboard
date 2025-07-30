@@ -4,7 +4,7 @@ A modern, responsive analytics dashboard built with Next.js 15, featuring advanc
 
 ## 🚀 Live Demo
 
-**Production URL**: *[Will be updated after Netlify deployment]*
+**Production URL**: *[[Click Here]](https://demo-analytics-dashboard.netlify.app/)*
 
 ## ✨ Features
 
