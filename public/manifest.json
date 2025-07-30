@@ -1,0 +1,16 @@
+{
+  "name": "Analytics Dashboard",
+  "short_name": "Analytics",
+  "description": "Real-time analytics dashboard with comprehensive data visualization",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

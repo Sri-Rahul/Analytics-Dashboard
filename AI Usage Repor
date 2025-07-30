@@ -1,0 +1,28 @@
+## AI Tools Used
+- **Primary tools:** GitHub Copilot, Perplexity  
+- **Key use cases:**  
+  - **Research & Planning:** Used Perplexity to gather up-to-date information on Next.js 14 features, UI component libraries, and best practices for structuring an analytics dashboard.  
+  - **Scaffolding & Boilerplate:** Leveraged GitHub Copilot to generate initial folder structure, routing configuration, and basic layout components (Cards, Charts, Tables).  
+  - **Component Implementation:** Copilot assisted in writing repetitive UI code (e.g., `<MetricCard>`, data table hooks) and wiring up mock data integration.  
+  - **UI/UX Refinement:** Perplexity suggested design system guidelines (spacing, typography, color schemes) and animation patterns for smooth micro-interactions.
+
+## Example Prompts
+1. **Scaffold Prompt:**  
+   > “Your goal is to scaffold and configure a modern, eye-candy Next.js 14+ analytics dashboard for **ADmyBRAND Insights**, leveraging high-quality UI component libraries (`@shadcn/ui`, `magicuidesign/magicui`, `@hero-ui/react`), Tailwind CSS, Framer Motion, and MCP servers (`context7`, `fetch`, `react-design-systems`). Include “use context7”, “use fetch”, and “use react-design-systems” directives at the top of prompts. Install core dependencies and set up dark/light mode toggle.”
+
+2. **Refinement Prompt:**  
+   > “Transform the analytics dashboard into a production-ready, industry-leading UI experience by removing debug components, implementing eye-candy design elements, fixing UI issues, and creating a cohesive professional aesthetic using Magic UI, Shadcn UI, and modern design patterns.”
+
+## AI vs Manual Work Split
+- **AI-generated (≈85%):**  
+  - Project scaffolding (routes, layout)  
+  - Boilerplate code for reusable components (MetricCard, Chart wrappers)  
+  - Mock data hooks and initial styling suggestions  
+  - Integration with ui component libraries
+- **Manual coding (≈15%):**  
+  - Custom CSS grid/flex layouts for responsive design  
+  - Debugging integration issues, performance tuning (FCP/LCP targets)  
+  - Installation of libraries and configuration
+- **Customization:**  
+  - Iteratively reviewed and refined Copilot-generated code to align with brand guidelines  
+  - Adapted Perplexity-suggested design principles for color consistency, accessibility, and WCAG compliance  

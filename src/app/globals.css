@@ -1,26 +1,591 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Custom Design System Variables */
+  /* Primary Colors */
+  --primary-50: #eff6ff;
+  --primary-500: #3b82f6;
+  --primary-900: #1e3a8a;
+  
+  /* Success Colors */
+  --success-50: #f0fdf4;
+  --success-500: #22c55e;
+  --success-900: #14532d;
+  
+  /* Warning Colors */
+  --warning-50: #fffbeb;
+  --warning-500: #f59e0b;
+  --warning-900: #78350f;
+  
+  /* Error Colors */
+  --error-50: #fef2f2;
+  --error-500: #ef4444;
+  --error-900: #7f1d1d;
+
+  /* Spacing System (8px grid) */
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-2: 0.5rem;  /* 8px */
+  --spacing-3: 1rem;    /* 16px */
+  --spacing-4: 1.5rem;  /* 24px */
+  --spacing-5: 2rem;    /* 32px */
+  --spacing-6: 3rem;    /* 48px */
+  --spacing-7: 4rem;    /* 64px */
+  --spacing-8: 6rem;    /* 96px */
+
+  /* Animation Variables */
+  --animation-duration-fast: 150ms;
+  --animation-duration-normal: 300ms;
+  --animation-duration-slow: 500ms;
+  --animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    transition: background-color var(--animation-duration-normal) var(--animation-easing),
+                color var(--animation-duration-normal) var(--animation-easing);
+  }
+  
+  /* Smooth theme transitions for all elements */
+  *,
+  *::before,
+  *::after {
+    transition: background-color var(--animation-duration-normal) var(--animation-easing),
+                border-color var(--animation-duration-normal) var(--animation-easing),
+                color var(--animation-duration-normal) var(--animation-easing),
+                fill var(--animation-duration-normal) var(--animation-easing),
+                stroke var(--animation-duration-normal) var(--animation-easing),
+                box-shadow var(--animation-duration-normal) var(--animation-easing);
+  }
+  
+  /* Shimmer animation for loading skeletons */
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+  
+  /* Tremor Chart Theme Support */
+  .tremor-BarChart .recharts-bar {
+    fill: currentColor;
+  }
+  
+  .tremor-BarChart .recharts-text {
+    fill: currentColor;
+  }
+  
+  .tremor-BarChart .recharts-cartesian-axis-tick-value {
+    fill: hsl(var(--muted-foreground));
+  }
+  
+  .tremor-BarChart .recharts-cartesian-grid-horizontal line,
+  .tremor-BarChart .recharts-cartesian-grid-vertical line {
+    stroke: hsl(var(--border));
+  }
+  
+  /* Dark mode specific overrides */
+  .dark .tremor-BarChart .recharts-bar {
+    fill: hsl(var(--foreground));
+  }
+  
+  .dark .tremor-BarChart .recharts-text {
+    fill: hsl(var(--foreground));
+  }
+
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    
+    .animate-shimmer {
+      animation: none !important;
+    }
+  }
+
+  /* Mobile-first responsive utilities */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Improved touch targets for mobile */
+  @media (max-width: 768px) {
+    button, 
+    [role="button"], 
+    input[type="button"], 
+    input[type="submit"], 
+    input[type="reset"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Larger tap targets for interactive elements */
+    a, 
+    button, 
+    [role="button"],
+    [tabindex]:not([tabindex="-1"]) {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  /* Responsive text scaling */
+  @media (max-width: 640px) {
+    html {
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1024px) {
+    html {
+      font-size: 15px;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    html {
+      font-size: 16px;
+    }
+  }
+
+  /* Smooth scrolling for mobile */
+  @media (max-width: 768px) {
+    html {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  /* Focus styles for keyboard navigation */
+  .focus-visible:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .border {
+      border-width: 2px;
+    }
+    
+    .shadow-sm {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  /* Magic UI Animations */
+  @keyframes aurora {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes border-beam {
+    100% {
+      offset-distance: 100%;
+    }
+  }
+
+  @keyframes shimmer-slide {
+    to {
+      transform: translate(calc(100cqw - 100%), -100%) rotate(45deg);
+    }
+  }
+
+  @keyframes spin-around {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-aurora {
+    animation: aurora 10s ease infinite;
+  }
+
+  .animate-border-beam {
+    offset-anchor: 90% 50%;
+    offset-path: rect(0 auto auto 0 round calc(var(--size) / 2));
+    animation: border-beam calc(var(--duration) * 1s) infinite linear;
+  }
+
+  .animate-shimmer-slide {
+    animation: shimmer-slide var(--speed) ease-in-out infinite alternate;
+  }
+
+  .animate-spin-around {
+    animation: spin-around var(--speed) linear infinite;
+  }
+
+}
+
+/* Recharts dark mode text color fixes */
+.dark .recharts-text,
+.dark .recharts-cartesian-axis-tick-value,
+.dark .recharts-cartesian-axis-tick,
+.dark .recharts-text.recharts-cartesian-axis-tick-value {
+  fill: hsl(var(--foreground)) !important;
+}
+
+.recharts-text,
+.recharts-cartesian-axis-tick-value,
+.recharts-cartesian-axis-tick,
+.recharts-text.recharts-cartesian-axis-tick-value {
+  fill: hsl(var(--foreground)) !important;
+}
+
+/* Ensure proper contrast for chart text */
+[data-theme="dark"] .recharts-text {
+  fill: #ffffff !important;
+}
+
+/* Chart.js text color fixes for dark mode */
+.dark canvas {
+  color: #ffffff !important;
+}
+
+/* Force Chart.js text elements to be white in dark mode */
+html.dark .chartjs-tooltip,
+html.dark .chartjs-tooltip *,
+.dark .chartjs-render-monitor {
+  color: #ffffff !important;
+}
+
+/* Custom scrollbar styles for better table responsiveness */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thumb-border {
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+
+.scrollbar-track-transparent {
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+
+/* Webkit scrollbar styles */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--border));
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--border) / 0.8);
+}
+
+/* Table responsive improvements */
+.table-fixed {
+  table-layout: fixed;
+}
+
+.table-fixed th,
+.table-fixed td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Enhanced mobile table scrolling with hidden scrollbars */
+.mobile-scroll-table {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox - hide scrollbar */
+  -ms-overflow-style: none; /* IE/Edge - hide scrollbar */
+  overscroll-behavior-x: contain; /* Prevent parent scroll */
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Ensure proper scroll on mobile */
+  touch-action: pan-x pinch-zoom;
+}
+
+/* Hide scrollbar for webkit browsers (Chrome, Safari, newer Edge) */
+.mobile-scroll-table::-webkit-scrollbar {
+  display: none; /* Hide scrollbar completely */
+  width: 0;
+  height: 0;
+}
+
+/* Additional webkit scrollbar hiding */
+.mobile-scroll-table::-webkit-scrollbar-track,
+.mobile-scroll-table::-webkit-scrollbar-thumb,
+.mobile-scroll-table::-webkit-scrollbar-corner {
+  display: none !important;
+  background: transparent !important;
+}
+
+/* Desktop table container for full width */
+.desktop-table-container {
+  width: 100% !important;
+  max-width: none !important;
+  overflow: visible;
+}
+
+@media (min-width: 768px) {
+  .desktop-table-container {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  .desktop-table-container .mobile-scroll-table {
+    width: 100%;
+    min-width: 100%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Alternative: Thin, subtle scrollbar that appears only on hover (desktop) */
+.mobile-scroll-table-subtle {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  overscroll-behavior-x: contain;
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x pinch-zoom;
+}
+
+.mobile-scroll-table-subtle::-webkit-scrollbar {
+  height: 6px;
+}
+
+.mobile-scroll-table-subtle::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mobile-scroll-table-subtle::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.mobile-scroll-table-subtle:hover::-webkit-scrollbar-thumb {
+  background: hsl(var(--border) / 0.3);
+}
+
+/* Force table to respect container width */
+.mobile-scroll-table table,
+.mobile-scroll-table-subtle table {
+  table-layout: auto !important;
+  width: auto !important;
+}
+
+/* Mobile scroll indicators with better visibility */
+.scroll-indicator {
+  position: sticky;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 20px;
+  background: linear-gradient(to left, hsl(var(--card)), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Touch-friendly mobile table enhancements */
+@media (max-width: 768px) {
+  .mobile-scroll-hint::after {
+    content: "→";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+    animation: pulse 2s infinite;
+  }
+
+  /* Larger touch targets for mobile */
+  .mobile-scroll-table th,
+  .mobile-scroll-table td {
+    min-height: 48px; /* Increased for better touch */
+    padding: 16px 12px; /* More padding for touch */
+  }
+
+  /* Prevent text selection during swipe but allow text selection */
+  .mobile-scroll-table {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  /* Re-enable text selection for actual content */
+  .mobile-scroll-table td *,
+  .mobile-scroll-table th * {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
+  /* Ensure proper scrolling on mobile */
+  .mobile-scroll-table {
+    scrollbar-width: auto; /* Show scrollbar on mobile */
+  }
+
+  /* Force layout isolation on mobile for sequential display */
+  .mobile-sequential-layout > * {
+    width: 100% !important;
+    max-width: 100% !important;
+    clear: both !important;
+    display: block !important;
+    float: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Ensure no grid or flex sharing on mobile */
+  .mobile-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    width: 100% !important;
+  }
+
+  .mobile-stack > * {
+    width: 100% !important;
+    flex: none !important;
+  }
 }

@@ -39,3 +39,36 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Development and documentation files
+*.md
+!README.md
+!DEPLOYMENT.md
+test-*.js
+verify-*.js
+scripts/optimize-imports.js
+
+# Summary and documentation files
+DEBUG_COMPONENTS_REMOVED.md
+FINAL_FIXES_SUMMARY.md
+MAGIC_UI_INTEGRATION_SUMMARY.md
+MOBILE_FIXES_SUMMARY.md
+MOBILE_RESPONSIVENESS_COMPLETE.md
+PRODUCTION_READY_FINAL.md
+PRODUCTION_READY_FINAL_COMPLETE.md
+RUNTIME_ERRORS_COMPLETELY_FIXED.md
+RUNTIME_ERRORS_FIXED_FINAL.md
+TABLE_SCROLLING_DESKTOP_FIXES_COMPLETE.md
+TASK_*.md
+TRANSFORMATION_COMPLETE.md
+UI_IMPROVEMENTS_SUMMARY.md
+UNIFIED_FILTERING_ENHANCEMENT_COMPLETE.md
+AI_Usage_Report*
+
+# Test files
+test-datatable.js
+test-webpack-fixes.js
+verify-accessibility.js
+verify-csv-export.js
+verify-filtering.js
+verify-pdf-export.js
