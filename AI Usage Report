@@ -15,14 +15,14 @@
 
 ## AI vs Manual Work Split
 - **AI-generated (≈85%):**  
-  - Project scaffolding (routes, layout)  
+  [- Project scaffolding (routes, layout)  
   - Boilerplate code for reusable components (MetricCard, Chart wrappers)  
   - Mock data hooks and initial styling suggestions  
-  - Integration with ui component libraries
+  - Integration with ui component libraries]
 - **Manual coding (≈15%):**  
-  - Custom CSS grid/flex layouts for responsive design  
+  [- Custom CSS grid/flex layouts for responsive design  
   - Debugging integration issues, performance tuning (FCP/LCP targets)  
-  - Installation of libraries and configuration
+  - Installation of libraries and configuration]
 - **Customization:**  
-  - Iteratively reviewed and refined Copilot-generated code to align with brand guidelines  
-  - Adapted Perplexity-suggested design principles for color consistency, accessibility.
+ [ - Iteratively reviewed and refined Copilot-generated code to align with brand guidelines  
+  - Adapted Perplexity-suggested design principles for color consistency, accessibility.]
