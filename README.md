@@ -1,3 +1,5 @@
+<img width="1895" height="911" alt="image" src="https://github.com/user-attachments/assets/bb49cdaf-b3fd-4fa7-a0b7-fd8554e5f517" />
+
 # 📊 Analytics Dashboard
 
 A modern, responsive analytics dashboard built with Next.js 15, featuring advanced data visualization, interactive filtering, and comprehensive export capabilities.
