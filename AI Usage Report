@@ -1,10 +1,10 @@
 ## AI Tools Used
-- **Primary tools:** GitHub Copilot, Perplexity  
+- **Primary tools:** [GitHub Copilot, Perplexity]  
 - **Key use cases:**  
-  - **Research & Planning:** Used Perplexity to gather up-to-date information on Next.js 14 features, UI component libraries, and best practices for structuring an analytics dashboard.  
+  [- **Research & Planning:** Used Perplexity to gather up-to-date information on Next.js 14 features, UI component libraries, and best practices for structuring an analytics dashboard.  
   - **Scaffolding & Boilerplate:** Leveraged GitHub Copilot to generate initial folder structure, routing configuration, and basic layout components (Cards, Charts, Tables).  
   - **Component Implementation:** Copilot assisted in writing repetitive UI code (e.g., `<MetricCard>`, data table hooks) and wiring up mock data integration.  
-  - **UI/UX Refinement:** Perplexity suggested design system guidelines (spacing, typography, color schemes) and animation patterns for smooth micro-interactions.
+  - **UI/UX Refinement:** Perplexity suggested design system guidelines (spacing, typography, color schemes) and animation patterns for smooth micro-interactions.]
 
 ## Example Prompts
 1. **Scaffold Prompt:**  
