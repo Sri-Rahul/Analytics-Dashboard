@@ -48,8 +48,8 @@ A modern, responsive analytics dashboard built with Next.js 15, featuring advanc
 ## 🛠️ Tech Stack
 
 ### **Frontend Framework**
-- **Next.js 15.4.4** - React framework with App Router
-- **React 19.1.0** - Latest React with concurrent features
+- **Next.js** - React framework with App Router
+- **React 18.3.1** -  React with concurrent features
 - **TypeScript 5** - Type-safe development
 
 ### **Styling & UI**
@@ -269,13 +269,6 @@ Located in `__tests__` directories throughout the codebase.
 ## 📄 License
 
 This project is private and proprietary.
-
-## 📞 Support
-
-For questions or support, please contact:
-- **Project Lead**: [Your Name]
-- **Email**: [Your Email]
-- **Repository**: [Repository URL]
 
 ---
 
