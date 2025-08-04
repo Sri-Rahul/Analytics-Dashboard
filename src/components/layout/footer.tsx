@@ -272,13 +272,11 @@ export function Footer({ className }: FooterProps) {
                   "transition-all duration-200"
                 )}
               />
-              <ShimmerButton
-                className="px-6 py-2 text-sm"
-                shimmerColor="#ffffff"
-                background="hsl(var(--primary))"
+              <button
+                className="px-6 py-2 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20"
               >
                 Subscribe
-              </ShimmerButton>
+              </button>
             </div>
           </div>
         </motion.div>

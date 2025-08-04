@@ -256,7 +256,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <DataTableErrorBoundary>
-      <div className="w-full space-y-4">
+      <div className="w-full max-w-none mx-auto space-y-4">
       {/* Advanced Filter Panel */}
       {enableAdvancedFiltering && (
         <FilterPanel
@@ -268,19 +268,19 @@ export function DataTable<TData, TValue>({
       )}
 
       {/* Search and Column Controls */}
-      <div className="flex items-center gap-4 py-4 w-full" role="toolbar" aria-label="Table controls">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 py-4 w-full max-w-none" role="toolbar" aria-label="Table controls">
         {searchKey && (
           <SearchInput
             value={searchValue}
             onChange={setSearchValue}
             placeholder={searchPlaceholder}
-            className="flex-1 min-w-[200px] max-w-md"
+            className="w-full sm:flex-1 sm:min-w-[200px] sm:max-w-md"
             onClear={() => setSearchValue("")}
             aria-label={`Search ${searchPlaceholder.toLowerCase()}`}
           />
         )}
         
-        <div className="ml-auto flex items-center gap-2">
+        <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto sm:ml-auto">
           {/* Results count with animation */}
           <motion.div
             key={filteredData.length}
@@ -354,36 +354,27 @@ export function DataTable<TData, TValue>({
           height={virtualHeight}
         />
       ) : (
-        <div className="w-full rounded-md border bg-card shadow-sm relative overflow-hidden">
+        <div className="w-full max-w-none mx-auto rounded-md border bg-card shadow-sm relative overflow-hidden">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             role="region"
             aria-label="Data table"
-            className="w-full"
+            className="w-full max-w-none"
           >
-          {/* Desktop-optimized table wrapper with full width */}
-          <div className="w-full max-w-none desktop-table-container">
+          {/* Responsive table wrapper - centered and full width */}
+          <div className="w-full max-w-none mx-auto">
             {/* Mobile scroll hint - only show on small screens */}
             <div className="sm:hidden absolute top-2 right-2 text-xs text-muted-foreground opacity-70 animate-pulse bg-background/90 px-2 py-1 rounded backdrop-blur-sm border z-10">
               👆 Scroll →
             </div>
             
-            {/* Enhanced scrollable table container with completely hidden scrollbars */}
-            <div className="w-full overflow-x-auto mobile-scroll-table"
-                 style={{
-                   width: '100%',
-                   maxWidth: 'none',
-                   scrollbarWidth: 'none',
-                   msOverflowStyle: 'none',
-                   WebkitOverflowScrolling: 'touch',
-                   touchAction: 'pan-x'
-                 }}
-            >
-              <Table role="table" aria-label="Analytics data table" className="w-full min-w-full"
+            {/* Enhanced scrollable table container - responsive and centered */}
+            <div className="responsive-table-container w-full">
+              <Table role="table" aria-label="Analytics data table" className="w-full"
                 style={{ 
-                  minWidth: '800px', // Ensure table is wider than containers for horizontal scroll
+                  minWidth: '100%',
                   width: '100%'
                 }}
               >
@@ -395,10 +386,10 @@ export function DataTable<TData, TValue>({
                       <TableHead 
                         key={header.id}
                         role="columnheader"
-                        className="text-left px-3 py-3 font-medium text-xs sm:text-sm border-r border-border/20 last:border-r-0 bg-muted/20 whitespace-nowrap"
+                        className="text-left px-2 sm:px-4 py-3 font-medium text-xs sm:text-sm border-r border-border/20 last:border-r-0 bg-muted/20 whitespace-nowrap"
                         style={{ 
-                          minWidth: '100px', // Reduced min width
-                          maxWidth: '200px' // Allow columns to be flexible
+                          minWidth: '120px',
+                          width: 'auto'
                         }}
                         aria-sort={
                           header.column.getIsSorted() === "asc" ? "ascending" :
@@ -442,16 +433,18 @@ export function DataTable<TData, TValue>({
                         <TableCell 
                           key={cell.id} 
                           role="cell"
-                          className="px-3 py-2 text-xs sm:text-sm border-r border-border/10 last:border-r-0 whitespace-nowrap"
+                          className="px-2 sm:px-4 py-3 text-xs sm:text-sm border-r border-border/10 last:border-r-0"
                           style={{ 
-                            minWidth: '100px',
-                            maxWidth: '200px'
+                            minWidth: '120px',
+                            width: 'auto'
                           }}
                         >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
+                          <div className="truncate max-w-[150px] sm:max-w-none" title={String(cell.getValue())}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </div>
                         </TableCell>
                       ))}
                     </motion.tr>

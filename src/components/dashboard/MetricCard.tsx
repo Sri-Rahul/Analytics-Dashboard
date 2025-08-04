@@ -1,14 +1,12 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataStatusDot } from "@/components/dashboard/DataFreshnessIndicator";
 import { MagicCard } from "@/components/ui/magic-card";
 import { NumberTicker } from "@/components/ui/number-ticker";
-import { BorderBeam } from "@/components/ui/border-beam";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import { LucideIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 
 interface MetricCardProps {
   title: string;
@@ -25,38 +23,22 @@ interface MetricCardProps {
 }
 
 // Professional animated counter using Magic UI NumberTicker
-const ProfessionalCounter = ({ 
-  value, 
+const ProfessionalCounter = memo(({
+  value,
   format = "number",
   isUpdating = false
-}: { 
-  value: number | string; 
+}: {
+  value: number | string;
   format?: "currency" | "percentage" | "number";
   isUpdating?: boolean;
 }) => {
   const numericValue = typeof value === "string" ? parseFloat(value) || 0 : value;
 
-  const formatValue = (val: number) => {
-    switch (format) {
-      case "currency":
-        return new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
-        }).format(val);
-      case "percentage":
-        return `${val.toFixed(1)}%`;
-      default:
-        return new Intl.NumberFormat("en-US").format(Math.round(val));
-    }
-  };
-
   // For currency and percentage, we need to handle the formatting differently
   if (format === "currency") {
     return (
       <span className="tabular-nums">
-        $<NumberTicker 
+        $<NumberTicker
           value={numericValue}
           className={cn(
             "font-bold transition-colors duration-300",
@@ -70,7 +52,7 @@ const ProfessionalCounter = ({
   if (format === "percentage") {
     return (
       <span className="tabular-nums">
-        <NumberTicker 
+        <NumberTicker
           value={numericValue}
           decimalPlaces={1}
           className={cn(
@@ -83,7 +65,7 @@ const ProfessionalCounter = ({
   }
 
   return (
-    <NumberTicker 
+    <NumberTicker
       value={numericValue}
       className={cn(
         "font-bold tabular-nums transition-colors duration-300",
@@ -91,9 +73,9 @@ const ProfessionalCounter = ({
       )}
     />
   );
-};
+});
 
-export function MetricCard({
+export const MetricCard = memo(function MetricCard({
   title,
   value,
   change,
@@ -114,7 +96,7 @@ export function MetricCard({
     if (previousValueRef.current !== value) {
       setIsUpdating(true);
       previousValueRef.current = value;
-      
+
       const timer = setTimeout(() => {
         setIsUpdating(false);
       }, 600);
@@ -143,17 +125,17 @@ export function MetricCard({
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ 
-        opacity: 1, 
+      animate={{
+        opacity: 1,
         y: 0,
         scale: isUpdating ? [1, 1.01, 1] : 1
       }}
-      transition={{ 
+      transition={{
         duration: 0.4,
         ease: "easeOut",
         scale: { duration: 0.6, ease: "easeInOut" }
       }}
-      whileHover={{ 
+      whileHover={{
         y: -2,
         transition: { duration: 0.2, ease: "easeOut" }
       }}
@@ -162,7 +144,7 @@ export function MetricCard({
       <MagicCard
         className={cn(
           "h-full transition-all duration-300 cursor-pointer relative overflow-hidden",
-          "min-h-[140px] p-6 backdrop-blur-sm", 
+          "min-h-[140px] p-6 backdrop-blur-sm",
           "border border-neutral-200 dark:border-neutral-800",
           "bg-white/50 dark:bg-neutral-900/50",
           "hover:shadow-xl hover:shadow-neutral-200/20 dark:hover:shadow-neutral-800/20",
@@ -178,10 +160,10 @@ export function MetricCard({
         tabIndex={0}
       >
         {/* Removed BorderBeam animation on update to fix odd circle appearance */}
-        
+
         {/* Header */}
         <div className="flex flex-row items-center justify-between mb-4">
-          <h3 
+          <h3
             id={`metric-${title.replace(/\s+/g, '-').toLowerCase()}-title`}
             className="text-sm font-medium text-muted-foreground flex items-center gap-2"
           >
@@ -196,7 +178,7 @@ export function MetricCard({
           </h3>
           <motion.div
             whileHover={{ scale: 1.1, rotate: 5 }}
-            animate={isUpdating ? { 
+            animate={isUpdating ? {
               scale: [1, 1.2, 1],
               rotate: [0, 10, 0]
             } : {}}
@@ -207,7 +189,7 @@ export function MetricCard({
               isUpdating && "bg-primary/10 dark:bg-primary/10"
             )}
           >
-            <Icon 
+            <Icon
               className={cn(
                 "h-5 w-5 text-muted-foreground transition-colors duration-200",
                 isUpdating && "text-primary"
@@ -219,7 +201,7 @@ export function MetricCard({
 
         {/* Main Value */}
         <div className="mb-3">
-          <motion.div 
+          <motion.div
             className="text-3xl font-bold tracking-tight"
             animate={isUpdating ? {
               scale: [1, 1.02, 1]
@@ -233,7 +215,7 @@ export function MetricCard({
         </div>
 
         {/* Change Indicator */}
-        <motion.div 
+        <motion.div
           id={`metric-${title.replace(/\s+/g, '-').toLowerCase()}-change`}
           className={cn(
             "text-sm flex items-center gap-2 px-2 py-1 rounded-md",
@@ -245,7 +227,7 @@ export function MetricCard({
           transition={{ delay: 0.3, duration: 0.3 }}
           aria-live="polite"
         >
-          <motion.span 
+          <motion.span
             className={cn(
               "inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-medium",
               changeType === "positive" && "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400",
@@ -265,4 +247,4 @@ export function MetricCard({
       </MagicCard>
     </motion.div>
   );
-}
+});

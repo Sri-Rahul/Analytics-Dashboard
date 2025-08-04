@@ -22,7 +22,7 @@ import {
 import { useRealTimeData, useRealTimeChartData } from "@/hooks/useRealTimeData";
 import { motion } from "motion/react";
 import { DollarSign, Users, TrendingUp, Activity, RefreshCw } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useKeyboardNavigation, keyboardUtils } from "@/hooks/useKeyboardNavigation";
 import { ClientOnly } from "@/components/ui/client-only";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
@@ -47,17 +47,17 @@ export default function Dashboard() {
   const lineChartData = useRealTimeChartData('line');
   const barChartData = useRealTimeChartData('bar');
 
-  const toggleRealTime = () => {
+  const toggleRealTime = useCallback(() => {
     if (isRealTimeEnabled) {
       stopRealTimeUpdates();
     } else {
       startRealTimeUpdates();
     }
     setIsRealTimeEnabled(!isRealTimeEnabled);
-  };
+  }, [isRealTimeEnabled, stopRealTimeUpdates, startRealTimeUpdates]);
 
-  // Define keyboard shortcuts
-  const keyboardShortcuts = [
+  // Define keyboard shortcuts with useMemo for performance
+  const keyboardShortcuts = useMemo(() => [
     {
       key: "h",
       description: "Go to dashboard home",
@@ -103,7 +103,7 @@ export default function Dashboard() {
       category: "Actions",
       action: () => keyboardUtils.focusElement('input[type="search"], input[placeholder*="Search"]')
     }
-  ];
+  ], [toggleRealTime, forceRefresh]);
 
   // Enable keyboard navigation
   useKeyboardNavigation({ shortcuts: keyboardShortcuts });
@@ -202,7 +202,7 @@ export default function Dashboard() {
                     cols={{ default: 1, sm: 2, lg: 4 }}
                     gap="lg"
                   >
-                    {[
+                    {useMemo(() => [
                       {
                         title: "Total Revenue",
                         value: metrics.revenue.current,
@@ -239,7 +239,7 @@ export default function Dashboard() {
                         format: "number",
                         delay: 0.3
                       }
-                    ].map((metric, index) => (
+                    ], [metrics]).map((metric, index) => (
                       <motion.div
                         key={metric.title}
                         initial={{ opacity: 0, y: 20 }}
@@ -303,8 +303,8 @@ export default function Dashboard() {
                   
                   <CardContent className="relative p-6">
                     <ErrorBoundary>
-                      <ClientOnly fallback={<div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        {[...Array(4)].map((_, i) => (
+                      <ClientOnly fallback={<div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        {[...Array(3)].map((_, i) => (
                           <div key={i} className="text-center">
                             <div className="h-8 bg-muted animate-pulse rounded mb-2" />
                             <div className="h-4 bg-muted animate-pulse rounded" />
@@ -313,27 +313,11 @@ export default function Dashboard() {
                       </div>}>
                       {/* Professional Grid Layout */}
                       <ResponsiveGrid 
-                        cols={{ default: 2, md: 4 }}
+                        cols={{ default: 1, sm: 3 }}
                         gap="lg"
                         className="relative z-10"
                         aria-label="Real-time activity metrics"
                       >
-                        {/* Active Users */}
-                        <motion.div 
-                          className="group relative p-4 rounded-xl border border-border/40 bg-card/60 backdrop-blur-sm hover:border-primary/30 transition-all duration-300"
-                          whileHover={{ scale: 1.02, y: -2 }}
-                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                        >
-                          <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-blue-500/80" />
-                          <div className="flex flex-col items-center text-center space-y-2">
-                            <div className="text-2xl font-bold text-blue-600 tracking-tight sm:text-3xl">
-                              {realtimeMetrics.activeUsers}
-                            </div>
-                            <div className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Active Users</div>
-                          </div>
-                          <div className="absolute inset-0 rounded-xl bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </motion.div>
-
                         {/* Page Views */}
                         <motion.div 
                           className="group relative p-4 rounded-xl border border-border/40 bg-card/60 backdrop-blur-sm hover:border-green-500/30 transition-all duration-300"
@@ -386,14 +370,13 @@ export default function Dashboard() {
                     </ErrorBoundary>
                     
                     {/* Subtle Activity Lines */}
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500/20 via-green-500/20 to-purple-500/20" />
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-green-500/20 via-orange-500/20 to-purple-500/20" />
                   </CardContent>
                 </Card>
               </motion.div>
             </section>
           </MobileFirstSection>
 
-          {/* Charts Section */}
           {/* Charts Section */}
           <MobileFirstSection>
             <section aria-labelledby="charts-heading" id="charts" className="mt-16">
@@ -479,58 +462,28 @@ export default function Dashboard() {
             </section>
           </MobileFirstSection>
 
-          {/* Advanced Features */}
+          {/* Date Range Analytics */}
           <MobileFirstSection>
             <section className="mt-16">
-              <motion.div 
-                className="mb-12"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.6 }}
-              >
-                <h2 className="text-3xl font-bold text-foreground mb-3">
-                  Advanced Features
-                </h2>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  Powerful tools for data analysis and management
-                </p>
-              </motion.div>
-            
-            <ResponsiveGrid cols={{ default: 1 }} gap="lg">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 1.7 }}
-              >
-                <Suspense fallback={<LoadingSkeleton variant="card" height={300} />}>
-                  <LazyDateRangePickerDemo />
-                </Suspense>
-              </motion.div>
-            </ResponsiveGrid>
+              <ResponsiveGrid cols={{ default: 1 }} gap="lg">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 1.6 }}
+                >
+                  <Suspense fallback={<LoadingSkeleton variant="card" height={300} />}>
+                    <LazyDateRangePickerDemo />
+                  </Suspense>
+                </motion.div>
+              </ResponsiveGrid>
             </section>
           </MobileFirstSection>
 
-
         </ResponsiveContainer>
         
-        {/* Data Management Section - Full Width for Better Table Display */}
-        <div className="w-full px-4 sm:px-6 lg:px-8 mt-16">
+          {/* Data Management Section */}
           <MobileFirstSection>
-            <section>
-              <motion.div 
-                className="mb-12 max-w-screen-2xl mx-auto"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.9 }}
-              >
-                <h2 className="text-3xl font-bold text-foreground mb-3">
-                  Data Management
-                </h2>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  Unified filtering system with basic search, advanced filters, and performance optimization
-                </p>
-              </motion.div>
-
+            <section className="mt-16">
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -538,14 +491,11 @@ export default function Dashboard() {
                 className="w-full overflow-hidden"
               >
                 <Suspense fallback={<LoadingSkeleton variant="card" height={600} />}>
-                  <div className="w-full">
-                    <LazyUnifiedFilteringDemo />
-                  </div>
+                  <LazyUnifiedFilteringDemo />
                 </Suspense>
               </motion.div>
             </section>
           </MobileFirstSection>
-        </div>
 
         </main>
       </div>

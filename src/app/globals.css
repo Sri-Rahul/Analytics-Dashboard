@@ -428,50 +428,67 @@ html.dark .chartjs-tooltip *,
   text-overflow: ellipsis;
 }
 
-/* Enhanced mobile table scrolling with hidden scrollbars */
-.mobile-scroll-table {
+/* Enhanced responsive table scrolling */
+.responsive-table-container {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 auto;
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
-  scrollbar-width: none; /* Firefox - hide scrollbar */
-  -ms-overflow-style: none; /* IE/Edge - hide scrollbar */
-  overscroll-behavior-x: contain; /* Prevent parent scroll */
-  overflow-x: auto;
-  overflow-y: hidden;
-  /* Ensure proper scroll on mobile */
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+  overscroll-behavior-x: contain;
   touch-action: pan-x pinch-zoom;
 }
 
-/* Hide scrollbar for webkit browsers (Chrome, Safari, newer Edge) */
-.mobile-scroll-table::-webkit-scrollbar {
-  display: none; /* Hide scrollbar completely */
-  width: 0;
-  height: 0;
+/* Webkit scrollbar styling for better UX */
+.responsive-table-container::-webkit-scrollbar {
+  height: 8px;
 }
 
-/* Additional webkit scrollbar hiding */
-.mobile-scroll-table::-webkit-scrollbar-track,
-.mobile-scroll-table::-webkit-scrollbar-thumb,
-.mobile-scroll-table::-webkit-scrollbar-corner {
-  display: none !important;
-  background: transparent !important;
+.responsive-table-container::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 4px;
 }
 
-/* Desktop table container for full width */
-.desktop-table-container {
-  width: 100% !important;
-  max-width: none !important;
-  overflow: visible;
+.responsive-table-container::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
 }
 
-@media (min-width: 768px) {
-  .desktop-table-container {
-    width: 100%;
-    min-width: 100%;
+.responsive-table-container::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--border) / 0.8);
+}
+
+/* Mobile-specific table improvements */
+@media (max-width: 768px) {
+  .responsive-table-container {
+    /* Show scrollbar on mobile for better UX */
+    scrollbar-width: auto;
   }
   
-  .desktop-table-container .mobile-scroll-table {
-    width: 100%;
-    min-width: 100%;
+  .responsive-table-container::-webkit-scrollbar {
+    height: 12px; /* Larger scrollbar on mobile */
+  }
+  
+  /* Ensure table cells are touch-friendly */
+  .responsive-table-container table th,
+  .responsive-table-container table td {
+    min-height: 44px;
+    padding: 12px 8px;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 769px) {
+  .responsive-table-container {
+    /* Thinner scrollbar on desktop */
+    scrollbar-width: thin;
+  }
+  
+  .responsive-table-container::-webkit-scrollbar {
+    height: 6px;
   }
 }
 
@@ -565,27 +582,261 @@ html.dark .chartjs-tooltip *,
     scrollbar-width: auto; /* Show scrollbar on mobile */
   }
 
-  /* Force layout isolation on mobile for sequential display */
-  .mobile-sequential-layout > * {
+  /* Unified filtering system mobile improvements */
+  .unified-filtering-container {
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .unified-filtering-container > * {
+    width: 100% !important;
+    max-width: none !important;
+    flex: none !important;
+  }
+
+  /* Force sequential stacking on mobile */
+  .unified-filtering-container [data-state="active"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
+  .unified-filtering-container [data-state="active"] > * {
+    width: 100% !important;
+    max-width: none !important;
+    flex: none !important;
+    clear: both !important;
+    float: none !important;
+  }
+
+  /* Mobile-first responsive grid for features */
+  .features-grid-mobile {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    width: 100% !important;
+    margin-bottom: 2rem !important;
+  }
+
+  /* Ensure table section is completely separate */
+  .table-section-mobile {
+    width: 100% !important;
+    max-width: none !important;
+    margin-top: 2rem !important;
+    padding-top: 2rem !important;
+    border-top: 1px solid hsl(var(--border)) !important;
     clear: both !important;
     display: block !important;
     float: none !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
   }
 
-  /* Ensure no grid or flex sharing on mobile */
-  .mobile-stack {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1rem !important;
+  /* Prevent any floating or inline behavior */
+  .mobile-block-only {
+    display: block !important;
     width: 100% !important;
+    clear: both !important;
+    float: none !important;
   }
 
-  .mobile-stack > * {
+  /* Force isolation for table container */
+  .mobile-table-isolate {
+    isolation: isolate !important;
+    contain: layout !important;
     width: 100% !important;
-    flex: none !important;
+    max-width: none !important;
   }
+}
+
+/* Desktop-specific improvements */
+@media (min-width: 769px) {
+  .unified-filtering-container {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .features-grid-desktop {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* Magic UI Animations */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient 3s ease infinite;
+}
+
+@keyframes shimmer-slide {
+  to {
+    transform: translate(calc(100cqw - 100%), 0);
+  }
+}
+
+.animate-shimmer-slide {
+  animation: shimmer-slide 1s ease-in-out infinite alternate;
+}
+
+@keyframes spin-around {
+  0% {
+    transform: translateZ(0) rotate(0);
+  }
+  15%, 35% {
+    transform: translateZ(0) rotate(90deg);
+  }
+  65%, 85% {
+    transform: translateZ(0) rotate(270deg);
+  }
+  100% {
+    transform: translateZ(0) rotate(360deg);
+  }
+}
+
+.animate-spin-around {
+  animation: spin-around 2s linear infinite;
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-rainbow {
+  animation: rainbow 3s ease infinite;
+}
+
+@keyframes background-position-spin {
+  0% {
+    background-position: top center;
+  }
+  100% {
+    background-position: bottom center;
+  }
+}
+
+.animate-background-position-spin {
+  animation: background-position-spin 3000ms infinite alternate;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  to {
+    background-position: 0% 0%;
+  }
+}
+
+.animate-shine {
+  animation: shine 2s ease-in-out infinite;
+}
+
+@keyframes shiny-text {
+  0%, 90%, 100% {
+    background-position: calc(-100% - var(--shiny-width)) 0;
+  }
+  30%, 60% {
+    background-position: calc(100% + var(--shiny-width)) 0;
+  }
+}
+
+.animate-shiny-text {
+  animation: shiny-text 8s ease-in-out infinite;
+}
+
+@keyframes line-shadow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-line-shadow {
+  animation: line-shadow 2s linear infinite;
+}
+
+@keyframes aurora {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-aurora {
+  animation: aurora 3s ease infinite;
+}
+
+@keyframes rippling {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.animate-rippling {
+  animation: rippling 600ms ease-out;
+}
+
+@keyframes meteor {
+  0% {
+    transform: rotate(var(--angle)) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--angle)) translateX(-500px);
+    opacity: 0;
+  }
+}
+
+.animate-meteor {
+  animation: meteor 5s linear infinite;
+}
+
+/* CSS Variables for Magic UI */
+:root {
+  --color-1: #ff6b6b;
+  --color-2: #4ecdc4;
+  --color-3: #45b7d1;
+  --color-4: #96ceb4;
+  --color-5: #feca57;
+  --shiny-width: 100px;
 }
