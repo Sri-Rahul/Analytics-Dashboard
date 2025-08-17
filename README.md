@@ -265,18 +265,6 @@ Located in `__tests__` directories throughout the codebase.
 3. Commit changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
-
-## 📄 License
-
-This project is private and proprietary.
-
-## 📞 Support
-
-For questions or support, please contact:
-- **Project Lead**: [Your Name]
-- **Email**: [Your Email]
-- **Repository**: [Repository URL]
-
 ---
 
 **Built with ❤️ using Next.js, React, and modern web technologies.**
